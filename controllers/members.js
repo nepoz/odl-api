@@ -9,6 +9,13 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/:id', (req, res) => {
+    Member.findById(req.params.id)
+        .then(target => {
+            res.json(target.toJSON())
+        })
+})
+
 router.post('/', (req, res) => {
     const info = req.body
 
@@ -23,6 +30,13 @@ router.post('/', (req, res) => {
     member.save()
         .then(savedMember => {
             res.json(savedMember.toJSON())
+        })
+})
+
+router.delete('/:id', (req, res) => {
+    Member.findByIdAndRemove(req.params.id)
+        .then(() => {
+            res.status(204).end()
         })
 })
 
