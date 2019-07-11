@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Member = require('../models/Member')
+const { getStaffInfo }  = require('../utils/getStaffInfo')
 
 router.get('/', (req, res) => {
     Member.find({})
@@ -38,6 +39,12 @@ router.delete('/:id', (req, res) => {
         .then(() => {
             res.status(204).end()
         })
+})
+
+router.patch('/', (req, res) => {
+    getStaffInfo()
+        .then(members => Member.insertMany(members)
+            .then(updatedMembers => res.json(updatedMembers.map(member => member.toJSON()))))
 })
 
 module.exports = router
