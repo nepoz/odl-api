@@ -41,6 +41,14 @@ router.delete('/:id', (req, res) => {
         })
 })
 
+router.delete('/', (req, res) => {
+    Member.remove({})
+        .then(() => {
+            console.log('all clear!')
+            res.status(204).end()
+        })
+})
+
 router.patch('/', (req, res) => {
     getStaffInfo()
         .then(members => Member.insertMany(members)

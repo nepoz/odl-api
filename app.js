@@ -17,6 +17,7 @@ mongoose.connect(config.MONGODB_URI, {useNewUrlParser:true})
 app.use(cors())
 //For when frontend implemented: app.use(express.static('build'))
 app.use(bodyParser.json())
+app.use(express.static('./build'))
 
 app.use('/api/members', membersRouter)
 
