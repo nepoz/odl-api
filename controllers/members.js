@@ -49,10 +49,28 @@ router.delete('/', (req, res) => {
         })
 })
 
-router.patch('/', (req, res) => {
+router.put('/', (req, res) => {
     getStaffInfo()
         .then(members => Member.insertMany(members)
             .then(updatedMembers => res.json(updatedMembers.map(member => member.toJSON()))))
+})
+
+router.get('/call/:id', (req, res) => {
+    Member
+        .findById(req.params.id)
+        .then (member => {
+            const number = member.number.split('.').join('');
+            res.redirect(302, `tel:+1${number}`);
+        })  
+})
+
+router.get('/email/:id', (req, res) => {
+    Member
+        .findById(req.params.id)
+        .then(member => {
+            const email = member.email;
+            res.redirect(302, `mailto:${member.email}`);
+        })
 })
 
 module.exports = router
